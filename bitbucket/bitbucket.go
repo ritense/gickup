@@ -2,6 +2,7 @@ package bitbucket
 
 import (
 	"net/url"
+	"os"
 	"time"
 
 	"github.com/cooperspencer/gickup/logger"
@@ -95,6 +96,9 @@ func Get(conf *types.Conf) ([]types.Repo, bool) {
 					}
 				}
 			}
+		} else {
+			sub.Error().Msgf("Exiting due to error fetching Bitbucket repositories: %s", err.Error())
+			os.Exit(1)
 		}
 
 		for _, r := range repositories {
